@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import axios, { AxiosRequestConfig } from "axios";
+
 import {
   IoPlayBackSharp,
   IoPlayForwardSharp,
@@ -9,8 +11,30 @@ import {
 } from "react-icons/io5";
 interface PlayerProps {}
 
+const options: AxiosRequestConfig = {
+  method: "GET",
+  url: "https://spotify23.p.rapidapi.com/artist_overview/",
+  params: {
+    id: "2w9zwq3AktTeYYMuhMjju8",
+  },
+  headers: {
+    "X-RapidAPI-Key": "bdaaf6df2bmshdf0727fc340485bp17dd54jsn2e8ea6d6b34d",
+    "X-RapidAPI-Host": "spotify23.p.rapidapi.com",
+  },
+};
+
 const Player: React.FC<PlayerProps> = ({}) => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const getData = async (options: AxiosRequestConfig) => {
+      try {
+        const response = await axios.request(options);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getData(options);
+  }, []);
 
   return (
     <div>
