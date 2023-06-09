@@ -11,3 +11,4 @@ export interface LoginTypes {
   email: string | undefined;
   password: string | undefined;
 }
+export interface WidgetProps {}

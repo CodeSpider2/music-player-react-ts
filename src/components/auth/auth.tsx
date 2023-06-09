@@ -38,7 +38,7 @@ const Auth = () => {
     email: LoginEmail,
     password: LoginPass,
   };
-  const LoginSubmission = (event: any) => {
+  const LoginSubmission = () => {
     console.log(LoginData);
   };
   const emailChange = (event: ChangeEvent<HTMLInputElement>) => {

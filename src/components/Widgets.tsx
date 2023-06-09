@@ -1,7 +1,6 @@
 import React from "react";
 import Box from "./Box";
-
-interface WidgetProps {}
+import { WidgetProps } from "../Types/types";
 
 const Widget: React.FC<WidgetProps> = ({}) => {
   return (
