@@ -1,4 +1,4 @@
-import { SchemaTypes } from "../../Types/types";
+import { SchemaTypes, LoginTypes } from "../../Types/types";
 import { ZodType, z } from "zod";
 import { useState, ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import musicpng from "../../assets/music.png";
 const Auth = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [LoginPass, SetloginPass] = useState<string | undefined>(undefined);
+  const [LoginEmail, setEmail] = useState<string | undefined>(undefined);
   const checkAuth = (event: ChangeEvent<HTMLInputElement>) => {
     setIsLogin(event.target.checked);
   };
@@ -29,16 +31,29 @@ const Auth = () => {
     resolver: zodResolver(schema),
   });
 
-  const formSubmission = (data: SchemaTypes) => {
-    console.log(data);
+  const SignUpSubmission = (SignUpdata: SchemaTypes) => {
+    console.log(SignUpdata, LoginEmail, LoginPass);
   };
-
+  const LoginData: LoginTypes = {
+    email: LoginEmail,
+    password: LoginPass,
+  };
+  const LoginSubmission = (event: any) => {
+    console.log(LoginData);
+  };
+  const emailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+    // console.log(LoginEmail);
+  };
+  const passwordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    SetloginPass(event.target.value);
+  };
   return (
     <>
       <div className="content h-[100vh] w-[100vw] bg-pink-800 flex justify-center items-center">
         <form
           action=""
-          onSubmit={handleSubmit(formSubmission)}
+          onSubmit={handleSubmit(SignUpSubmission, LoginSubmission)}
           className=" rounded border border-gray-50 bg-white px-[5rem] py-[0rem]"
         >
           <div className="logo flex justify-center">
@@ -69,6 +84,7 @@ const Auth = () => {
               type="email"
               id="email"
               {...register("email")}
+              onChange={emailChange}
               className="border-b border-pink-500 focus:border-black focus:outline-0"
             />
             {errors.email && (
@@ -79,6 +95,7 @@ const Auth = () => {
             <label htmlFor="password">Password:</label>
             <input
               type="password"
+              onChangeCapture={passwordChange}
               id="password"
               {...register("password")}
               className="border-b border-pink-500 focus:border-black focus:outline-0"
