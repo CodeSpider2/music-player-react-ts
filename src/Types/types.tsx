@@ -12,3 +12,19 @@ export interface LoginTypes {
   password: string | undefined;
 }
 export interface WidgetProps {}
+
+export interface AudioFile {
+  name: string;
+  path: string;
+  cover: string;
+}
+
+export interface AudioContextType {
+  audioFiles: AudioFile[];
+  isPlaying: boolean;
+  currentPlaying: AudioFile | null;
+  playAudio: (audio: AudioFile) => void;
+}
+export interface MusicProviderprops {
+  children: React.ReactNode;
+}
