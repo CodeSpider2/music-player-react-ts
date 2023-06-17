@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.box-background{
+    background-image: url(./assets/sprinter-cover.jpg);
+    /* background-size: cover; */
+    background-size: auto;
+    background-repeat: no-repeat;
+}
