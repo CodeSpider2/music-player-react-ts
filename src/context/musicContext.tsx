@@ -17,8 +17,10 @@ const MusicContextProvider: React.FC<MusicProviderprops> = ({ children }) => {
       cover: "../../assets/sprinter-cover.jpg",
     },
   ]);
-  const [currentPlaying, setCurrentPlaying] = useState<AudioFile | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [currentPlaying, setCurrentPlaying] = useState<AudioFile | null>(
+    audioFiles[0]
+  );
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
   const playAudio = (audio: AudioFile) => {
     if (currentPlaying && currentPlaying.path === audio.path) {
