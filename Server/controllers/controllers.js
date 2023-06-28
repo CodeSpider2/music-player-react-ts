@@ -47,11 +47,11 @@ export const postUsers = async (req, res) => {
   }
 };
 
-export const loginUser = (req, res) => {
+export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const query = `SELECT * FROM Users WHERE email = '${email}'`;
-    db.query(query, (err, user) => {
+    db.query(query, async (err, user) => {
       if (err) {
         log(err);
         return;
@@ -60,22 +60,22 @@ export const loginUser = (req, res) => {
         res.json({ message: "Account not found please sign up" });
         return;
       }
-      const legitPassword = bcrypt.compare(user[0].userPassword, password);
-      if (!legitPassword) {
-        res.json({ message: "Incorrect password" });
-        return;
+      const storedPassword = user[0].userPassword;
+
+      const passwordMatch = await bcrypt.compare(password, storedPassword);
+
+      if (!passwordMatch) {
+        return res.json({ message: "Incorrect password" });
       }
-      const Payload = user.map((data) => {
-        const { userPassword, ...rest } = data;
-        return rest;
-      });
-      const token = jwt.sign(Payload[0], process.env.JWT_SIGNATURE, {
+      const payload = { id: user[0].id, email: user[0].email };
+
+      const token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: "3600s",
       });
-      res.json({ message: "Login successful", token: token });
-      return;
+
+      return res.json({ message: "Login successful", token });
     });
   } catch (error) {
-    res.json(error);
+    res.status(500).json({ message: "Internal Server Error", error: error });
   }
 };

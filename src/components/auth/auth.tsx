@@ -4,6 +4,8 @@ import { useState, ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import musicpng from "../../assets/music.png";
+import axios from "axios";
+import { log } from "console";
 const Auth = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [LoginPass, SetloginPass] = useState<string | undefined>(undefined);
@@ -31,15 +33,29 @@ const Auth = () => {
     resolver: zodResolver(schema),
   });
 
-  const SignUpSubmission = (SignUpdata: SchemaTypes) => {
+  const SignUpSubmission = async (SignUpdata: SchemaTypes) => {
     console.log(SignUpdata, LoginEmail, LoginPass);
+    try {
+      const request = await axios.post(
+        "http://localhost:4500/auth/signup",
+        SignUpdata
+      );
+      log(request.data);
+    } catch (error) {
+      log(error);
+    }
   };
   const LoginData: LoginTypes = {
     email: LoginEmail,
     password: LoginPass,
   };
-  const LoginSubmission = () => {
+  const LoginSubmission = async () => {
     console.log(LoginData);
+    const loginRequest = await axios.post(
+      "http://localhost:4500/auth/login",
+      LoginData
+    );
+    log(loginRequest.data);
   };
   const emailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
