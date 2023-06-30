@@ -8,7 +8,8 @@ import jwt from "jsonwebtoken";
 export const postUsers = async (req, res) => {
   try {
     const { userName, password, email } = req.body;
-    const hashedPass = await bcrypt.hash(password, 10);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPass = await bcrypt.hash(password, salt);
 
     const id = uuidv4();
     const trial_data = { userName, password, email };
