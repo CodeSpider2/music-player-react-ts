@@ -39,6 +39,7 @@ const Auth = () => {
       userPassword: SignUpdata.password,
       email: SignUpdata.email,
     };
+    console.log(newdata);
     try {
       const request = await axios.post(
         "http://localhost:4500/auth/signup",

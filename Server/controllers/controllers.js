@@ -8,10 +8,9 @@ import jwt from "jsonwebtoken";
 export const postUsers = async (req, res) => {
   try {
     const { userName, password, email } = req.body;
-    const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(password, salt);
-
+    log(req.body);
     const id = uuidv4();
+
     const trial_data = { userName, password, email };
     const { error, value } = sign_up_validator.validate(trial_data);
     if (error) {
@@ -29,6 +28,10 @@ export const postUsers = async (req, res) => {
         res.json({ message: "User already exists" });
         return;
       }
+
+      const salt = bcrypt.genSaltSync(10);
+
+      const hashedPass = bcrypt.hashSync(password, salt);
 
       const data = {
         Id: id,
