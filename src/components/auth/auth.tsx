@@ -7,6 +7,9 @@ import musicpng from "../../assets/music.png";
 import axios from "axios";
 const Auth = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+  const [Loginsuccess, setLoginsuccess] = useState<boolean>(false);
+  const [FailedLogin, setFailedLogin] = useState<boolean>(false);
   const [LoginPass, SetloginPass] = useState<string | undefined>(undefined);
   const [LoginEmail, setEmail] = useState<string | undefined>(undefined);
   const checkAuth = (event: ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +42,6 @@ const Auth = () => {
       password: SignUpdata.password,
       email: SignUpdata.email,
     };
-    console.log(newdata);
     try {
       const request = await axios.post(
         "http://localhost:4500/auth/signup",
@@ -54,13 +56,29 @@ const Auth = () => {
     email: LoginEmail,
     password: LoginPass,
   };
-  const LoginSubmission = async () => {
+  const LoginSubmission = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     console.log(LoginData);
-    const loginRequest = await axios.post(
-      "http://localhost:4500/auth/login",
-      LoginData
-    );
-    console.log(loginRequest.data);
+    try {
+      const loginRequest = await axios.post(
+        "http://localhost:4500/auth/login",
+        LoginData
+      );
+      console.log(loginRequest.data.message);
+      setFailedLogin(false);
+      setLoginsuccess(true);
+      setMessage(loginRequest.data.message);
+      setTimeout(() => {
+        setLoginsuccess(false);
+      }, 4000);
+    } catch (error) {
+      console.log(error);
+      setFailedLogin(true);
+      setLoginsuccess(false);
+      setTimeout(() => {
+        setFailedLogin(false);
+      }, 4000);
+    }
   };
   const emailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -76,7 +94,7 @@ const Auth = () => {
       <>
         <div className="content h-[100vh] w-[100vw] bg-pink-800 flex justify-center items-center">
           <form
-            onSubmit={handleSubmit(LoginSubmission)}
+            onSubmit={(e) => LoginSubmission(e)}
             className="rounded border border-gray-50 bg-white px-[5rem] py-[0rem]"
           >
             {/* Login form fields */}
@@ -87,6 +105,13 @@ const Auth = () => {
             </div>
             <div className="title text-center text-3xl text-black mb-5 p-0 underline ">
               Login
+            </div>
+
+            <div className="message flex justify-center my-5 text-green-500">
+              {Loginsuccess ? `${message}` : ""}
+            </div>
+            <div className="message flex justify-center my-5 text-red-500">
+              {FailedLogin ? "Login Failed: " + `${message}` : ""}
             </div>
 
             <div className="email flex flex-col">

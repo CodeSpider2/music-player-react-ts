@@ -8,7 +8,6 @@ import jwt from "jsonwebtoken";
 export const postUsers = async (req, res) => {
   try {
     const { userName, password, email } = req.body;
-    log(req.body);
     const id = uuidv4();
 
     const trial_data = { userName, password, email };
