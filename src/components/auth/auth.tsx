@@ -36,7 +36,7 @@ const Auth = () => {
     console.log(SignUpdata);
     const newdata = {
       userName: SignUpdata.name,
-      userPassword: SignUpdata.password,
+      password: SignUpdata.password,
       email: SignUpdata.email,
     };
     console.log(newdata);
