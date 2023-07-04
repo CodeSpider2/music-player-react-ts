@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import musicpng from "../../assets/music.png";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const Auth = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
@@ -12,6 +14,7 @@ const Auth = () => {
   const [FailedLogin, setFailedLogin] = useState<boolean>(false);
   const [LoginPass, SetloginPass] = useState<string | undefined>(undefined);
   const [LoginEmail, setEmail] = useState<string | undefined>(undefined);
+  const navigate = useNavigate();
   const checkAuth = (event: ChangeEvent<HTMLInputElement>) => {
     setIsLogin(event.target.checked);
   };
@@ -71,6 +74,8 @@ const Auth = () => {
       setTimeout(() => {
         setLoginsuccess(false);
       }, 4000);
+      localStorage.setItem("token", loginRequest.data.token);
+      navigate("/dashboard");
     } catch (error) {
       console.log(error);
       setFailedLogin(true);
@@ -111,7 +116,9 @@ const Auth = () => {
               {Loginsuccess ? `${message}` : ""}
             </div>
             <div className="message flex justify-center my-5 text-red-500">
-              {FailedLogin ? "Login Failed: " + `${message}` : ""}
+              {FailedLogin
+                ? "Login Failed try again later! " + `${message}`
+                : ""}
             </div>
 
             <div className="email flex flex-col">
