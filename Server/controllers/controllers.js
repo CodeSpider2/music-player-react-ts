@@ -4,7 +4,7 @@ import sign_up_validator from "../schemas/validators.js";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
+import nodemailer from "nodemailer";
 export const postUsers = async (req, res) => {
   try {
     const { userName, password, email } = req.body;
@@ -44,6 +44,24 @@ export const postUsers = async (req, res) => {
         res.json({ message: "User added successfully", response: resp });
         return;
       });
+      const transporter = nodemailer.createTransport({
+        service: "outlook",
+        auth: {
+          user: "wachiraamos@outlook.com",
+          pass: "amo11063",
+        },
+      });
+      const mailOptions = {
+        from: "wachiraamos@outlook.com",
+        to: data.email,
+        subject: "Thanks for Joining STREAM",
+        text: `Dear ${data.userName},
+
+We are thrilled to welcome you to our web app community! On behalf of the entire team, I wanted to extend a heartfelt thank you for choosing to join us.
+
+At STREAM, we strive to provide an exceptional user experience and offer valuable features that cater to your needs. We're excited to have you on board and look forward to serving you.`,
+      };
+      transporter.sendMail(mailOptions);
     });
   } catch (error) {
     log(error);
