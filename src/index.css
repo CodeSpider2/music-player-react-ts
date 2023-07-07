@@ -12,3 +12,8 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
+.auth-background{
+    background-image: url(./assets/signup-pic.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+}

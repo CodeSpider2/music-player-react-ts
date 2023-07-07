@@ -12,7 +12,7 @@ const Join = () => {
         </div>
         <div
           onClick={redirect}
-          className="join-text flex justify-center items-center text-white text-2xl sm:mt-10 mt-5 rounded border border-white w-[20%] mx-auto hover:bg-white hover:text-blue-600 hover:font-bold"
+          className="join-text flex justify-center items-center cursor-pointer  text-2xl sm:mt-10 mt-5  border border-white w-[20%] mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300"
         >
           Join
         </div>

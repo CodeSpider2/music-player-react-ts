@@ -97,10 +97,10 @@ const Auth = () => {
   if (isLogin) {
     return (
       <>
-        <div className="content h-[100vh] w-[100vw] bg-pink-800 flex justify-center items-center">
+        <div className="content  w-[100vw] auth-background h-screen flex justify-center items-center">
           <form
             onSubmit={(e) => LoginSubmission(e)}
-            className="rounded border border-gray-50 bg-white px-[5rem] py-[0rem]"
+            className="rounded border border-gray-50 bg-gray-50 px-[5rem] py-[0rem]"
           >
             {/* Login form fields */}
             {/* ... */}
@@ -173,11 +173,11 @@ const Auth = () => {
   }
   return (
     <>
-      <div className="content h-[100vh] w-[100vw] bg-pink-800 flex justify-center items-center">
+      <div className="content h-screen w-[100vw] auth-background flex justify-center items-center">
         <form
           action=""
           onSubmit={handleSubmit(SignUpSubmission)}
-          className=" rounded border border-gray-50 bg-white px-[5rem] py-[0rem]"
+          className=" rounded border border-gray-50 bg-gray-50 px-[5rem] py-[0rem]"
         >
           <div className="logo flex justify-center">
             <img src={musicpng} alt="musicpng" />
@@ -192,7 +192,7 @@ const Auth = () => {
               type="text"
               id="username"
               {...register("name")}
-              className=" border-b border-pink-500 focus:border-black focus:outline-0"
+              className=" border-b bg-inherit border-pink-500 focus:border-black focus:outline-0"
             />
             {errors.name && (
               <span className=" text-red-400">{errors.name.message}</span>
@@ -206,7 +206,7 @@ const Auth = () => {
               id="email"
               {...register("email")}
               onChange={emailChange}
-              className="border-b border-pink-500 focus:border-black focus:outline-0"
+              className="border-b bg-inherit border-pink-500 focus:border-black focus:outline-0"
             />
             {errors.email && (
               <span className=" text-red-400">{errors.email.message}</span>
@@ -219,7 +219,7 @@ const Auth = () => {
               onChangeCapture={passwordChange}
               id="password"
               {...register("password")}
-              className="border-b border-pink-500 focus:border-black focus:outline-0"
+              className="border-b bg-inherit border-pink-500 focus:border-black focus:outline-0"
             />
             {errors.password && (
               <span className=" text-red-400">{errors.password.message}</span>
@@ -232,7 +232,7 @@ const Auth = () => {
               type="password"
               id="ConfirmPassword"
               {...register("confirmPassword")}
-              className="border-b border-pink-500 focus:border-black focus:outline-0"
+              className="border-b bg-inherit border-pink-500 focus:border-black focus:outline-0"
             />
             {errors.confirmPassword && (
               <span className=" text-red-400">
