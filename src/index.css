@@ -7,3 +7,8 @@
     background-size: auto;
     background-repeat: no-repeat;
 }
+.join-background{
+    background-image: url(./assets/join-pic.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
