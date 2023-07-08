@@ -5,6 +5,14 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+import path from "path";
+import fs from "fs";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const musicDirectory = path.join(__dirname, "music");
 export const postUsers = async (req, res) => {
   try {
     const { userName, password, email } = req.body;
@@ -99,4 +107,34 @@ export const loginUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error", error: error });
   }
+};
+
+export const playMusic = (req, res) => {
+  const track = req.params.track;
+  const filePath = path.join(__dirname, "music", track + ".mp3");
+
+  if (!fs.existsSync(filePath)) {
+    res.status(404).send("Track not found");
+    return;
+  }
+  res.setHeader("Content-Type", "audio/mpeg");
+  res.setHeader("Content-Disposition", `attachment; filename="${track}"`);
+  // res.json(track);
+
+  const readStream = fs.createReadStream(filePath);
+  readStream.pipe(res);
+};
+export const getMusic = (req, res) => {
+  fs.readdir(musicDirectory, (err, files) => {
+    if (err) {
+      console.error("Error reading music directory:", err);
+      return;
+    }
+    const musicFiles = files.filter((file) => {
+      const fileExtension = path.extname(file).toLowerCase();
+      return [".mp3", ".aac"].includes(fileExtension);
+    });
+
+    res.json(musicFiles);
+  });
 };
