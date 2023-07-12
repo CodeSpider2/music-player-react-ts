@@ -13,6 +13,8 @@ const Widget: React.FC<WidgetProps> = ({}) => {
       <Box />
       <Box />
       <Box />
+      <Box />
+      <Box />
     </div>
   );
 };
