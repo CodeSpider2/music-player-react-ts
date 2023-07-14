@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 .box-background{
-    background-image: url(./assets/sprinter-cover.jpg);
+    background-image: url(/music-icon.png);
     /* background-size: cover; */
     background-size: auto;
     background-repeat: no-repeat;

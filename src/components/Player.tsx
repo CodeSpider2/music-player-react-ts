@@ -1,5 +1,4 @@
-import { useContext, useRef, useEffect } from "react";
-import sprinter from "../assets/sprinter.mp3";
+import { useContext, useRef, useEffect, useState } from "react";
 import {
   IoPlayBackSharp,
   IoPlayForwardSharp,
@@ -8,13 +7,14 @@ import {
   IoPlaySharp,
 } from "react-icons/io5";
 import { MusicContext } from "../context/musicContext";
-// import { AudioFile } from "../Types/types";
+import axios from "axios";
 
 interface PlayerProps {}
 
 const Player: React.FC<PlayerProps> = () => {
   const musicContext = useContext(MusicContext);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -25,6 +25,27 @@ const Player: React.FC<PlayerProps> = () => {
       }
     }
   }, [musicContext?.isPlaying]);
+
+  useEffect(() => {
+    const fetchSong = async () => {
+      try {
+        const currentMusicName = localStorage.getItem("musicName");
+        const currentMusic = currentMusicName?.replace(".mp3", "");
+        const response = await axios.get(
+          `http://localhost:4500/music/${currentMusic}`
+        );
+        if (response.data && audioRef.current) {
+          audioRef.current.src = response.data;
+          setLoading(false); // Set loading state to false when song is fetched
+        }
+      } catch (error) {
+        console.log(error);
+        setLoading(false); // Set loading state to false if there's an error
+      }
+    };
+
+    fetchSong();
+  }, []);
 
   const playPauseHandler = () => {
     if (musicContext) {
@@ -41,14 +62,16 @@ const Player: React.FC<PlayerProps> = () => {
   const skipBackwardHandler = () => {
     // Logic to skip backward to the previous track
   };
-  console.log(musicContext?.currentPlaying);
 
   return (
     <div>
-      <div className="player w-[100%] h-[4rem] flex   overflow-hidden p-0 m-0 bottom-0 justify-center">
+      <div className="player w-[100%] h-[4rem] flex overflow-hidden p-0 m-0 bottom-0 justify-center">
         {/* Audio Player */}
-        {musicContext && musicContext.currentPlaying && (
-          <audio ref={audioRef} src={sprinter} controls />
+        {loading ? (
+          <div>Loading...</div> // Render loading component while song is being fetched
+        ) : (
+          musicContext &&
+          musicContext.currentPlaying && <audio ref={audioRef} controls />
         )}
       </div>
       <div className="controls flex justify-content-center items-center">

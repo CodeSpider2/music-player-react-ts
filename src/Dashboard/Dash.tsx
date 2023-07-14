@@ -11,7 +11,7 @@ const App: React.FC = ({}) => {
         <div className="side h-[100vh]">
           <SideBar />
         </div>
-        <div className="widget overflow-scroll overflow-x-hidden">
+        <div className="widget overflow-scroll overflow-x-hidden ">
           <Widget />
           <div className="player">
             <Player />
