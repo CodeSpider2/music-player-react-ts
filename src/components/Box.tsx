@@ -1,5 +1,5 @@
 interface BoxProps {
-  music: [];
+  music: {};
   // name: string;
   cover: string;
   // path: string;
