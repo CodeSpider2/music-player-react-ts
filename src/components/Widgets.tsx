@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "./Box";
-import { WidgetProps, SinglesItem, Source } from "../Types/types";
+import { WidgetProps, SinglesItem } from "../Types/types";
 import axios from "axios";
 
 const Widget: React.FC<WidgetProps> = ({}) => {
@@ -12,7 +12,7 @@ const Widget: React.FC<WidgetProps> = ({}) => {
         const response = await axios.get(
           "https://spotify-web2.p.rapidapi.com/artist_singles/",
           {
-            params: { offset: "0", limit: "20", id: "2w9zwq3AktTeYYMuhMjju8" },
+            params: { offset: "0", limit: "50", id: "2w9zwq3AktTeYYMuhMjju8" },
             headers: {
               "X-RapidAPI-Key":
                 "bdaaf6df2bmshdf0727fc340485bp17dd54jsn2e8ea6d6b34d",

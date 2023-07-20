@@ -65,7 +65,7 @@ const Player: React.FC<PlayerProps> = () => {
 
   return (
     <div>
-      <div className="player w-[100%] h-[4rem] flex overflow-hidden p-0 m-0 bottom-0 justify-center">
+      <div className="player w-[100%] h-[4rem] flex overflow-hidden p-0 m-0 bottom-0 justify-center fixed">
         {/* Audio Player */}
         {loading ? (
           <div>Loading...</div> // Render loading component while song is being fetched
